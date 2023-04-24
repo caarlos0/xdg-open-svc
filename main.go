@@ -47,15 +47,12 @@ func main() {
 func open(args ...string) error {
 	switch runtime.GOOS {
 	case "darwin":
-		_, err := exec.Command("open", args...).CombinedOutput()
-		return err
 	case "linux":
 		if d := os.Getenv("DISPLAY"); d == "" {
 			return fmt.Errorf("DISPLAY not set")
 		}
-		_, err := exec.Command("xdg-open", args...).CombinedOutput()
-		return err
 	default:
 		return fmt.Errorf("unsupported OS")
 	}
+	return exec.Command("/usr/bin/open", args...).Run()
 }
