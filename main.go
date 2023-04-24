@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	ln, err := net.Listen("tcp", ":2226")
+	ln, err := net.Listen("tcp", "127.0.0.1:2226")
 	if err != nil {
 		log.Fatal("could not open socket", "error", err)
 	}
