@@ -45,6 +45,13 @@ else
 fi
 ```
 
+## Alternatives
+
+As pointed out by @pbnj on #1, you can also use `ncat`, which comes with the
+`nmap` package. There are a few subtle differences, like the lack of logging and
+listening to `0.0.0.0` instead of `localhost`, but they should work more or less
+the same apart from that.
+
 ---
 
 I hope you find this useful :)
