@@ -33,7 +33,6 @@ I wrote an article about how I use this, along with `pbcopy` and `pbpaste` over
 SSH. You can read it
 [here](https://carlosbecker.com/posts/pbcopy-pbpaste-open-ssh/). It gives a few
 tips on how to make the experience better than using `nc` 😄
-```
 
 ## Alternatives
 
