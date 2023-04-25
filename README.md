@@ -29,20 +29,10 @@ echo "https://carlosbecker.com" | nc localhost 2226
 
 ## Making it better
 
-Tools like `gh` and many others use `open` or `xdg-open` to open links, and they
-obviously won't use `nc` automatically.
-
-A way to work around that is to have your own `open` binary in a higher place in
-the path. An example of how that binary could look like:
-
-```bash
-#!/bin/bash
-set -eo pipefail
-if test -n "$SSH_TTY"; then
-	echo "$@" | nc -q1 localhost 2226
-else
-	/usr/bin/open $*
-fi
+I wrote an article about how I use this, along with `pbcopy` and `pbpaste` over
+SSH. You can read it
+[here](https://carlosbecker.com/posts/pbcopy-pbpaste-open-ssh/). It gives a few
+tips on how to make the experience better than using `nc` 😄
 ```
 
 ## Alternatives
