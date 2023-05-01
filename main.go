@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"net"
 	"os"
@@ -18,30 +19,36 @@ func main() {
 		log.Fatal("could not open socket", "error", err)
 	}
 
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			log.Warn("could not accept connection", "error", err)
-			_ = conn.Close()
-			continue
-		}
-		log.Info("got conn")
-		bts, _, err := bufio.NewReader(conn).ReadLine()
-		if err != nil {
-			log.Warn("could not process connection", "error", err)
-			_ = conn.Close()
-			continue
-		}
+	log.Info("running on " + ln.Addr().String())
 
-		args := strings.Fields(string(bts))
-		log.Info("got args", "args", args)
-		if err := open(args...); err != nil {
-			log.Warn("could not process request", "error", err)
-			_ = conn.Close()
-			continue
-		}
-		_ = conn.Close()
+	for {
+		handleOne(ln)
 	}
+}
+
+func handleOne(ln net.Listener) {
+	conn, err := ln.Accept()
+	defer func() {
+		if err := conn.Close(); err != nil && !errors.Is(err, net.ErrClosed) {
+			log.Warn("could not close connection", "error", err)
+		}
+	}()
+	if err != nil {
+		log.Warn("could not accept connection", "error", err)
+		return
+	}
+	bts, _, err := bufio.NewReader(conn).ReadLine()
+	if err != nil {
+		log.Warn("could not process connection", "error", err)
+		return
+	}
+
+	args := strings.Fields(string(bts))
+	if err := open(args...); err != nil {
+		log.Warn("could not process request", "error", err)
+		return
+	}
+	log.Info("opened", "args", args)
 }
 
 func open(args ...string) error {
