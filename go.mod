@@ -2,7 +2,7 @@ module github.com/caarlos0/xdg-open-svc
 
 go 1.20
 
-require github.com/charmbracelet/log v0.2.1
+require github.com/charmbracelet/log v0.2.2
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
