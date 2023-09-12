@@ -29,7 +29,7 @@ jobs:
           cache: true
       - run: go mod tidy
       - run: go build ./...
-      - uses: goreleaser/goreleaser-action@v4
+      - uses: goreleaser/goreleaser-action@v5
         if: success() && startsWith(github.ref, 'refs/tags/')
         with:
           version: latest
