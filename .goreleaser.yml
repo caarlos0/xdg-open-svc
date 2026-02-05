@@ -7,19 +7,14 @@ release:
     ---
 
     _Released with [GoReleaser Pro](https://goreleaser.com/pro)!_
-brews:
+homebrew_casks:
   - name: xdg-open-svc
     repository:
       owner: caarlos0
       name: homebrew-tap
-    directory: Formula
+    directory: Casks
     description: "Service to open URLs"
     homepage: "https://caarlos0.dev"
-    service: |
-      run [opt_bin/"xdg-open-svc"]
-      keep_alive true
-      log_path var/"log/xdg-open-svc.log"
-      error_log_path var/"log/xdg-open-svc.log"
 
 builds:
   - id: xdg-open-svc
@@ -39,7 +34,8 @@ builds:
 archives:
   - id: default
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
-    format: tar.gz
+    formats:
+      - tar.gz
     files:
       - src: license*
       - src: LICENSE*
